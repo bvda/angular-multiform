@@ -8,6 +8,15 @@
       <button type="submit">Upload</button>
     </div>
   </form>
-  {{ this.json  | json}}
-
+</div>
+<div>
+  <form [formGroup] = "multipleUploadForm" (ngSubmit)="onSubmitMultiple()" enctype="multipart/form-data">      
+    <div>
+      <input type="file" multiple name="multiple" (change)="onFileMultipleSelect($event)" />
+    </div>
+    <div>
+      <button type="submit">Upload multiple</button>
+    </div>
+  </form>
+  {{ multipleUploadForm.value | json }}
 </div>

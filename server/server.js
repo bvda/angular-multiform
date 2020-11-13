@@ -9,17 +9,26 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
 
-const upload = multer({ dest: 'uploads/'})
+const upload = multer({ dest: 'uploads'})
 
-app.post('/upload', upload.single('file'), (req, res, next) => {;
+app.post('/upload/single', upload.single('single'), (req, res, next) => {
   const file = req.file
   if (!file) {
     const error = new Error('Please upload a file')
     error.httpStatusCode = 400
     return next(error)
-
   }
   res.send(file) 
+})
+
+app.post('/upload/multiple', upload.array('multiple'), (req, res, next) => {
+  const files = req.files
+  if (!files) {
+    const error = new Error('Please upload a file')
+    error.httpStatusCode = 400
+    return next(error)
+  }
+  res.send(files) 
 })
 
 app.listen(3000, () => {
